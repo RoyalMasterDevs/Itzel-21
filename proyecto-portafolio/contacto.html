@@ -63,19 +63,43 @@
         </nav>
     </div>
 
-    <main>
-        <div class="sobreMi">
-            <img src="img/avatar.PNG" alt="">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, odio vitae. Nesciunt nam commodi cum dolor accusantium culpa mollitia quibusdam corrupti obcaecati error laboriosam architecto quaerat earum repellendus distinctio, laborum, delectus aliquid id hic. Enim labore, sapiente optio temporibus suscipit quae ab deserunt quis nostrum vero beatae nemo aut ex harum ea. Libero blanditiis ratione corrupti culpa ut dolore consectetur deleniti, delectus ullam, neque molestiae voluptatem. Voluptatem deserunt, inventore repellat perspiciatis facilis porro voluptatum enim corrupti veritatis ex, quas totam aspernatur sit, magni impedit deleniti itaque voluptatibus dolorem cum exercitationem placeat delectus odit! Ducimus vero, officia perferendis tempore ullam debitis.</p>
-        </div>
+    <main>       
+            <form class="formulario" action="contacto.php" method="post">
+                <fieldset>
+                    <legend>Contactáme</legend>
+
+                    <div class="contenedor-campos">
+                        <div class="campo">
+                            <label>Nombre</label>
+                            <input class="input-text" type="text" name="name" id="nombre" placeholder="Tu Nombre">
+                        </div>
+
+                        <div class="campo">
+                            <label>Teléfono</label>
+                            <input class="input-text" type="tel"  name="phone"  id="telefono"placeholder="Tu Teléfono">
+                        </div>
+
+                        <div class="campo">
+                            <label>Email</label>
+                            <input class="input-text" type="email" name="mail" id="email" placeholder="Tu Email">
+                        </div>
+
+                        <div class="campo">
+                            <label>Mensaje</label>
+                            <textarea class="input-text" name="message"></textarea>
+                        </div>
+                    </div> <!-- .contenedor-campos -->
+
+                    <div class="alinear-derecha flex">
+                        <input class="boton w-sm-100" type="submit" id="enviarCorreo" value="Enviar">
+                    </div>
+                </fieldset>
+            </form>
     </main>
 
     <footer class="footer">
         <p>Todos los derechos reservados. Itzel Grajales Gutiérrez</p>
     </footer>
-
-
-
 </body>
 
 </html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es-mx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&family=Krub:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <title>reproductor mp3</title>
+
+</head>
+
+<body>
+    <main>
+
+        <div class="reproductor">
+            <div class="player">
+                <audio id="audio-player"></audio>
+
+                <h2 id="song-name" class="song-name"></h2>
+                <p id="song-author" class="song-author"></p>
+                <!-- PROGRESO -->
+                <div class="player-progress">
+                    <div class="progress-values">
+                        <span id="player-current-time">--:--</span>
+                        <span id="player-duration">--:--</span>
+                    </div>
+                    <!-- <progress id="player-progress"></progress> -->
+                    <input type="range" id="player-progress" value="50" />
+                </div>
+
+                <div class="player-buttons">
+                    <!-- REPETIR -->
+                    <button id="btn-repeat" class="btn btn-repeat">
+                        <i class="bi bi-repeat"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-repeat" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" />
+                            <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" />
+                          </svg>
+                    </button>
+                    <!-- IZQUIERDA -->
+                    <button id="btn-prev" class="btn btn-prev">
+                        <i class="bi bi-rewind-fill"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-caret-left" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M9 12l4 -4v8z" />
+                            <path d="M12 21a9 9 0 1 1 0 -18a9 9 0 0 1 0 18z" />
+                          </svg>
+                    </button>
+                    <!-- PLAY -->
+                    <button id="btn-play" class="btn btn-play">
+                        <i id="btn-play-icon" class="bi bi-play-fill"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-player-pause" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M6 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />
+                            <path d="M14 5m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" />
+                          </svg>
+                    </button>
+                    <!-- SIGUIENTE -->
+                    <button id="btn-next" class="btn btn-next">
+                        <i class="bi bi-fast-forward-fill"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-caret-right" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M15 12l-4 -4v8z" />
+                            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                          </svg>
+                    </button>
+                    <!-- VOLUMEN -->
+                    <div class="dropdown">
+                       
+                        <div class="dropdown-content">
+                            <input type="range" id="player-volume" value="1" min="0" max="1" step="0.01" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </section>
+    </main>
+
+
+    <!--Codigo de Javascript para que funcione el reproductor, Puedes dejarlo en este archivo HTML o llevarlo a otro archivo fuera, dentro del directorio raíz-->
+    <!--Para que funcione correctamente el código de JS, vas a dejar los atributos "id" y los nombres de las clases "class", por que trabaja con JQUERY's en la estructura HTML, si haces algún cambio asegurate de modificar también el código de JS-->
+    <!--En la constante "songs" se llaman los archivos .mp3 que va a leer el reproductor, es una estructura JSON, solo tienes que indicarle desde donde los va llamar en la sección de "path", te sugiero crees una carpeta en el directorio raiz llamada "songs" por ejemplo, y ahí metas todos los .mp3. El nombre del archivo debe tener la estructura "nombre - autor.mp3". Asegurate de no modificar la estructura JSON para que no te arroje errores, la consola de tu explrador web será tu mejor amiga en este proyecto ;)-->
+    <script>
+        const btnPlay = document.querySelector("#btn-play");
+        const btnPlayIcon = document.querySelector("#btn-play-icon");
+        const btnRepeat = document.querySelector("#btn-repeat");
+        const btnPrev = document.querySelector("#btn-prev");
+        const btnNext = document.querySelector("#btn-next");
+        const btnVolume = document.querySelector("#btn-volume");
+        const btnVolumeIcon = document.querySelector("#btn-volume i");
+        const playerVolume = document.querySelector("#player-volume");
+        const songName = document.querySelector("#song-name");
+        const songAuthor = document.querySelector("#song-author");
+        const playerCurrentTime = document.querySelector("#player-current-time");
+        const playerDuration = document.querySelector("#player-duration");
+        const playerProgress = document.querySelector("#player-progress");
+        const audioPlayer = document.querySelector("#audio-player");
+
+        let currentSong = 0;
+        let repeatSong = false;
+
+        const songs = [
+            {
+                name: "Jazzy Abstract Beat",
+                author: "Coma Media",
+                path: "./songs/Coma Media - Jazzy Abstract Beat.mp3",
+                cover:"./img/img1.jpeg",
+            },
+            {
+                name: "Sexy Fashion Beats",
+                author: "Coma Media",
+                path: "./songs/Coma Media - Sexy Fashion Beats.mp3",
+                cover:"./img/img2.jpeg",
+            },
+            {
+                name: "Best Time",
+                author: "FASSounds",
+                path: "./songs/FASSounds - Best Time.mp3",
+                cover:"./img/img3.jpeg",
+            },
+            {
+                name: "Guitar Electro Sport",
+                author: "Gvidon",
+                path: "./songs/Gvidon - Guitar Electro Sport Trailer.mp3",
+                cover:"./img/img4.jpeg",
+            }
+        ];
+
+        btnPlay.addEventListener("click", () => togglePlaySong());
+        btnPrev.addEventListener("click", () => changeSong(false));
+        btnNext.addEventListener("click", () => changeSong());
+        btnRepeat.addEventListener("click", () => toggleRepeatSong());
+        playerVolume.addEventListener("input", () => changeVolume());
+        playerProgress.addEventListener("input", () => changeTime());
+        audioPlayer.addEventListener("timeupdate", () => timeUpdate());
+        audioPlayer.addEventListener("ended", () => ended());
+
+        const togglePlaySong = () => {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                btnPlayIcon.classList.replace("bi-play-fill", "bi-pause-fill");
+            } else {
+                audioPlayer.pause();
+                btnPlayIcon.classList.replace("bi-pause-fill", "bi-play-fill");
+            }
+        };
+
+        const changeSong = (next = true) => {
+            if (next && currentSong < songs.length - 1) {
+                currentSong++;
+            } else if (!next && currentSong > 0) {
+                currentSong--;
+            } else {
+                return;
+            }
+
+            updatePlayer();
+            togglePlaySong();
+        };
+
+        const updatePlayer = () => {
+            const song = songs[currentSong];
+
+            songName.innerHTML = song.name;
+            songAuthor.innerHTML = song.author;
+            audioPlayer.src = song.path;
+            playerProgress.value = audioPlayer.currentTime;
+        };
+
+        const toggleRepeatSong = () => {
+            repeatSong = !repeatSong;
+            btnRepeat.classList.toggle("btn-activated");
+        };
+
+        const timeUpdate = () => {
+            const { currentTime, duration } = audioPlayer;
+
+            if (isNaN(duration)) return;
+
+            playerDuration.innerHTML = formatSecondsToMinutes(duration);
+            playerCurrentTime.innerHTML = formatSecondsToMinutes(currentTime);
+            playerProgress.max = duration;
+            playerProgress.value = currentTime;
+        };
+
+        const changeVolume = () => {
+            const { value } = playerVolume;
+
+            audioPlayer.volume = value;
+
+            if (value == 0) {
+                btnVolumeIcon.classList.replace("bi-volume-up-fill", "bi-volume-mute-fill");
+            } else {
+                btnVolumeIcon.classList.replace("bi-volume-mute-fill", "bi-volume-up-fill");
+            }
+        };
+
+        const changeTime = () => {
+            audioPlayer.currentTime = playerProgress.value;
+        };
+
+        const formatSecondsToMinutes = (seconds) => {
+            return new Date(seconds * 1000).toISOString().slice(14, 19);
+        };
+
+        const ended = () => {
+            repeatSong ? togglePlaySong() : changeSong(true);
+        };
+
+        window.onload = () => {
+            updatePlayer();
+        };
+
+    </script>
+</body>
+
+</html>
